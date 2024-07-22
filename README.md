@@ -1,7 +1,7 @@
 # First Person Camera Project
 
 TODO list:
-- CONTINUE LATER: a simple 3D world with cuboids and cylinders
+- DONE: a simple 3D world with cuboids and cylinders
 - DONE: a camera can move around in 3D
 - DONE: the camera can't intersect with other objects
 - DONE: the camera can be rotated freely
@@ -11,4 +11,4 @@ TODO list:
 - DONE: as the camera is moved around / rotated, forces are applied to the object to keep it at that point relative to the camera
 - DONE: if the "held" object is too far from that point (e.g. because there's a wall or another object in the way), it is "dropped"
 - DONE: if the E key is pressed while holding an object, the object is dropped.
-- if Q is pressed while holding an object, the object is thrown forward
+- DONE: if Q is pressed while holding an object, the object is thrown forward

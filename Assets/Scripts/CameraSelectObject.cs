@@ -15,6 +15,8 @@ public class CameraSelectObject : MonoBehaviour
 
     GameObject pickedObject;
 
+    public float throwForce;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,13 @@ public class CameraSelectObject : MonoBehaviour
                 DropObject();
             else if (highlightedObject != null)
                 PickObject(highlightedObject);
+        }
+
+        if (pickedObject != null && Input.GetKeyDown(KeyCode.Q))
+        {
+            GameObject heldObject = pickedObject;
+            DropObject();
+            heldObject.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce);
         }
 
         if (pickedObject != null && !pickedObject.GetComponent<PickableObjectMove>().PickedUp)
