@@ -43,8 +43,9 @@ public class CameraMovement : MonoBehaviour
     void FixedUpdate()
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
-        float verticalMovement = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
+        float forwardMovement = Input.GetAxis("Forward");
+        float verticalMovement = Input.GetAxis("Upward");
+        Vector3 movement = new Vector3(horizontalMovement, verticalMovement, forwardMovement).normalized;
         Rigidbody rigidbody = GetComponent<Rigidbody>();
         rigidbody.AddForce(transform.TransformDirection(accelaration * Time.fixedDeltaTime * 1000 * movement));
 

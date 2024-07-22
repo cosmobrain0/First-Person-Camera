@@ -33,29 +33,30 @@ public class CameraSelectObject : MonoBehaviour
             TrySetHighlightedObject(hitObject);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (pickedObject != null)
                 DropObject();
             else if (highlightedObject != null)
                 PickObject(highlightedObject);
         }
+
+        if (pickedObject != null && !pickedObject.GetComponent<PickableObjectMove>().PickedUp)
+        {
+            DropObject();
+        }
     }
 
     void DropObject()
     {
         if (pickedObject == null) return;
-        pickedObject.transform.parent = null;
-        pickedObject.GetComponent<Rigidbody>().useGravity = true;
-        pickedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        pickedObject.GetComponent<PickableObjectMove>().Drop();
         pickedObject = null;
     }
 
     void PickObject(GameObject toPickUp)
     {
-        toPickUp.transform.parent = transform;
-        toPickUp.GetComponent<Rigidbody>().useGravity = false;
-        toPickUp.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        toPickUp.GetComponent<PickableObjectMove>().PickUp(gameObject, maxHighlightDistance, maxHighlightDistance*0.75f);
         pickedObject = toPickUp;
     }
 
