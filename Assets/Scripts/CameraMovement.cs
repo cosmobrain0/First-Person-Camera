@@ -8,14 +8,38 @@ public class CameraMovement : MonoBehaviour
     public float accelaration = 0;
     public float rotationSpeed = 0f;
 
-    // Start is called before the first frame update
+    Vector2 previousMousePosition;
+
     void Start()
     {
         Rigidbody rigidbody = GetComponent<Rigidbody>();
         rigidbody.maxLinearVelocity = 2f;
+        Vector3 mousePosition = Input.mousePosition;
+        previousMousePosition = new Vector2(mousePosition.x, mousePosition.y);
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // just pressed the left mouse button
+            Vector3 mousePosition = Input.mousePosition;
+            previousMousePosition = new Vector2(mousePosition.x, mousePosition.y);
+        }
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 mousePosition3D = Input.mousePosition;
+            Vector2 mousePosition = new Vector2(mousePosition3D.x, mousePosition3D.y);
+            Vector2 mouseDelta = mousePosition - previousMousePosition;
+
+            transform.Rotate(transform.InverseTransformDirection(Vector3.up), mouseDelta.x * rotationSpeed * Time.deltaTime);
+
+            transform.Rotate(Vector3.right, -mouseDelta.y * rotationSpeed * Time.deltaTime);
+
+            previousMousePosition = mousePosition;
+        }
+    }
+
     void FixedUpdate()
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
