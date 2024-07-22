@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraSelectObject : MonoBehaviour
 {
     public GameObject highlightedObject;
-    public bool holdingObject;
     public Shader highlightShader;
     Material highlightMaterial;
     public float timeMultiplier;
@@ -14,10 +13,11 @@ public class CameraSelectObject : MonoBehaviour
     public float maxHighlightDistance = 2;
     public string pickableTag;
 
+    GameObject pickedObject;
+
     // Start is called before the first frame update
     void Start()
     {
-        holdingObject = false;
     }
 
     // Update is called once per frame
@@ -32,6 +32,31 @@ public class CameraSelectObject : MonoBehaviour
             Vector3 hitPoint = hit.point;
             TrySetHighlightedObject(hitObject);
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (pickedObject != null)
+                DropObject();
+            else if (highlightedObject != null)
+                PickObject(highlightedObject);
+        }
+    }
+
+    void DropObject()
+    {
+        if (pickedObject == null) return;
+        pickedObject.transform.parent = null;
+        pickedObject.GetComponent<Rigidbody>().useGravity = true;
+        pickedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        pickedObject = null;
+    }
+
+    void PickObject(GameObject toPickUp)
+    {
+        toPickUp.transform.parent = transform;
+        toPickUp.GetComponent<Rigidbody>().useGravity = false;
+        toPickUp.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        pickedObject = toPickUp;
     }
 
     void TrySetHighlightedObject(GameObject toHighlight)
