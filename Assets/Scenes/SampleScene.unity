@@ -558,6 +558,7 @@ MonoBehaviour:
   timeMultiplier: 0.03
   maxHighlightDistance: 2
   pickableTag: pickable
+  throwForce: 250
 --- !u!1 &1296887569
 GameObject:
   m_ObjectHideFlags: 0
